@@ -27,10 +27,10 @@ Route::group(['prefix' => 'admin'], function () {
     });
 
     Route::group(['prefix' => 'dataset'], function () {
-        Route::get('/', 'AtributController@index')->name('dataser.index');
-        Route::post('/store', 'AtributController@store')->name('dataser.store');
-        Route::put('/{id}/update', 'AtributController@update')->name('dataser.update');
-        Route::get('/{id}/delete', 'AtributController@destroy')->name('dataser.delete');
+        Route::get('/', 'DatasetController@index')->name('dataset.index');
+        Route::post('/store', 'DatasetController@store')->name('dataset.store');
+        Route::put('/{id}/update', 'DatasetController@update')->name('dataset.update');
+        Route::get('/{id}/delete', 'DatasetController@destroy')->name('dataset.delete');
     });
 
     Route::get('/test', 'TestController@index');

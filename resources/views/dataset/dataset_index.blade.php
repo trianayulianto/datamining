@@ -3,9 +3,9 @@
 @section('content')
     <!-- Page Heading -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Atribut</h1>
+        <h1 class="h3 mb-0 text-gray-800">Dataset</h1>
         <div class="button-group">
-            <a href="#" class="btn btn-primary pull-right addAtribut">
+            <a href="#" class="btn btn-primary pull-right addDataset">
                 <i class="fas fa-plus"></i> Tambah
             </a>
             {{-- <a href="#" class="btn btn-success pull-right">
@@ -19,7 +19,7 @@
             <!-- Basic Card Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Data Atribut</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">Dataset</h6>
                 </div>
                 <div class="card-body">
                     <div class="col-lg-12">
@@ -29,8 +29,7 @@
                                     <thead class="text-dark">
                                         <tr>
                                             <th width="1%">No</th>
-                                            <th width="40%">Nama</th>
-                                            <th class="text-left">Nilai Atribut</th>
+                                            <th width="40%">Dataset</th>
                                             <th class="text-center">created_at</th>
                                             <th class="text-center">updated_at</th>
                                             <th class="text-center" width="100">Aksi</th>
@@ -40,20 +39,18 @@
                                         @foreach ($data as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>{{ $item->name }}</td>
-                                                <td class="text-left">
-                                                    @foreach ($item->nilai as $i => $row)
-                                                        <div class="text-left"><a href="{{ route('nilai.delete', ['id' => $row->id]) }}"><i class="fas fa-eraser fa-sm text-danger mr-4"></i></a>{{ $row->name }}</div>
-                                                    @endforeach
-                                                    <a href="#" class="text-left addNilai" id="add_nilai" data-id="{{ $item->id }}" data-name="{{ $item->name }}"><i class="fas fa-plus fa-sm text-primary mr-4"></i></a>Tambah
+                                                <td>
+                                                    @for ($i = 0; $i < count($item->data); $i++)
+                                                        [{{ $item->data[$i] }}]
+                                                    @endfor
                                                 </td>
                                                 <td class="text-center">{{ \Carbon\Carbon::createFromTimeStamp(strtotime($item->created_at))->diffForHumans() }}</td>
                                                 <td class="text-center">{{ !empty($item->updated_at) ? \Carbon\Carbon::createFromTimeStamp(strtotime($item->updated_at))->diffForHumans() : '-+-' }}</td>
                                                 <td>
-                                                    <a href="#" class="btn btn-sm btn-warning editAtribut" data-id="{{ $item->id }}">
+                                                    <a href="#" class="btn btn-sm btn-warning editDataset" data-id="{{ $item->id }}">
                                                         <i class="fas fa-edit fa-sm fa-fw"></i>
                                                     </a>
-                                                    <a href="{{ route('atribut.delete', ['id' => $item->id]) }}" class="btn btn-sm btn-danger">
+                                                    <a href="{{ route('dataset.delete', ['id' => $item->id]) }}" class="btn btn-sm btn-danger">
                                                         <i class="fas fa-eraser fa-sm fa-fw"></i>
                                                     </a>
                                                 </td>
@@ -81,11 +78,7 @@
                 </div>
                 <form class="submit_input" method="post">
                     @csrf
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="name" class="form-control-label">Nilai Atribut</label>
-                            <input type="text" name="name" id="name" class="form-control col-12">
-                        </div>
+                    <div class="modal-body form-dataset">
                     </div>
                     <div class="modal-footer">
                         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
@@ -102,24 +95,38 @@
     <script>
         // var $ = jQuery.noConflict();
         $(document).ready(function () {
-            $('.addNilai').click(function (e) {
-                e.preventDefault();
-                var id_atribut = $(this).attr('data-id');
-                var name_atribut = $(this).attr('data-name');
-                $('#modaldetail').modal('show');
-                $('#modaldetail').find('.modal-title').html('Tambah nilai atribut '+name_atribut).addClass('text-white');
-                $('#modaldetail').find('form').attr('action', '{{ route('nilai.store') }}');
-                $('input[name="_token"]').after('<input type="hidden" name="atribut_id" value="'+id_atribut+'">');
-            });
 
-            $('.addAtribut').click(function (e) {
+            $('.addDataset').click(function (e) {
                 e.preventDefault();
                 $('#modaldetail').modal('show');
-                $('#modaldetail').find('.modal-title').html('Tambah atribut baru').addClass('text-white');
-                $('#modaldetail').find('form').attr('action', '{{ route('atribut.store') }}');
+                $('#modaldetail').find('.modal-title').html('Tambah dataset').addClass('text-white');
+                $('#modaldetail').find('form').attr('action', '{{ route('dataset.store') }}');
+                $.ajax({
+                    type: "get",
+                    url: "{{ route('atribut.json.all') }}",
+                    dataType: "json",
+                    success: function (response) {
+                        var html = '';
+                        $.map(response, function (value, key) {
+                            // console.log(value);
+
+                            html = '<div class="form-group">';
+                            html += '<label for="data[]" class="form-control-label">Nilai '+value.name+'</label>';
+                            html += '<select class="form-control col-12" name="data[]" id="data['+key+']">';
+                            html += '<option value="">Pilih nilai '+value.name+'</option>';
+                            $.map(value.nilai, function (item, index) {
+                                html += '<option value="'+item.name+'">'+item.name+'</option>';
+                            });
+                            html += '</select>';
+                            html += '</div>';
+
+                            $('.form-dataset').append(html);
+                        });
+                    }
+                });
             });
 
-            $('.editAtribut').click(function (e) {
+            $('.editDataset').click(function (e) {
                 e.preventDefault();
                 var id = $(this).attr('data-id');
                 $('#modaldetail').modal('show');
@@ -130,16 +137,47 @@
                 $('#modaldetail').find('form').prepend('{{ method_field('PUT') }}');
                 $.ajax({
                     type: "get",
-                    url: "{{ route('atribut.json.id') }}",
-                    data: {id: id},
+                    url: "{{ route('atribut.json.all') }}",
                     dataType: "json",
                     success: function (response) {
-                        if (response != []) {
-                            $('#modaldetail').find('input[name="name"]').val(response.name);
-                        }
+                        var html = '';
+                        $.map(response, function (value, key) {
+                            // console.log(value);
+
+                            html = '<div class="form-group">';
+                            html += '<label for="data[]" class="form-control-label">Nilai '+value.name+'</label>';
+                            html += '<select class="form-control col-12" name="data[]" id="data['+key+']">';
+                            html += '<option value="">Pilih nilai '+value.name+'</option>';
+                            $.map(value.nilai, function (item, index) {
+                                html += '<option value="'+item.name+'">'+item.name+'</option>';
+                            });
+                            html += '</select>';
+                            html += '</div>';
+
+                            $('.form-dataset').append(html);
+                        });
+                        getValueDataset();
                     }
                 });
+                function getValueDataset() {
+                    $.ajax({
+                        type: "get",
+                        url: "{{ route('dataset.json.id') }}",
+                        data: {id: id},
+                        dataType: "json",
+                        success: function (response) {
+                            $.map(response.data, function (value, key) {
+                                $('#modaldetail').find('select[id="data['+key+']"]').val(value);
+                            });
+                        }
+                    });
+                }
             });
+
+            $('#modaldetail').on('hide.bs.modal', function(){
+                $('.form-group').remove();
+            });
+
         });
     </script>
 @endpush

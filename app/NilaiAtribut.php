@@ -10,4 +10,11 @@ class NilaiAtribut extends Model
         'name',
         'atribut_id'
     ];
+
+    protected $dates = [];
+
+    public function atribut()
+    {
+        return $this->belongsTo(Atribut::class, 'atribut_id');
+    }
 }

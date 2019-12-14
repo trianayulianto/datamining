@@ -37,7 +37,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Data Master:</h6>
                 <a class="collapse-item" href="{{ route('atribut.index') }}">Atribut</a>
-                <a class="collapse-item" href="{{ route('atribut.index') }}">Dataset</a>
+                <a class="collapse-item" href="{{ route('dataset.index') }}">Dataset</a>
                 </div>
             </div>
         </li>
