@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
 Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/dashboard', function () {
@@ -33,6 +37,11 @@ Route::group(['prefix' => 'admin'], function () {
         Route::get('/{id}/delete', 'DatasetController@destroy')->name('dataset.delete');
     });
 
+    Route::get('/hitung', 'HitungController@index')->name('hitung.index');
+    Route::post('/hitung/hasil', 'HitungController@hasil')->name('hasil.index');
+
     Route::get('/test', 'TestController@index');
+
+    Route::get('/import', 'UserController@profile')->name('import.excel');
 
 });

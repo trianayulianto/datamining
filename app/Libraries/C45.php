@@ -35,10 +35,6 @@ class C45
         return $target;
     }
 
-
-
-
-
     public function hitung()
     {
         $this->_hitung($this->data, $this->attributes);
@@ -168,14 +164,14 @@ class C45
 
         }
 
-
     }
 
     public function _printRules($rules = null, $tab = 2)
     {
+        // dd($rules);
         $root = array_keys($rules)[0];
         $root_data = array_values($rules)[0];
-        echo "<ul>";
+        echo '<ul class="c45" style="display: none;">';
         foreach($root_data as $kasus=>$data){
             if(isset($data['nilai'])) {
                 echo "<li>if ", strtoupper($root), " == ", strtoupper($kasus) ," then</li>";
@@ -187,9 +183,8 @@ class C45
                 echo "<li>if ", strtoupper($root), " == ", strtoupper($kasus)," then</li>";
                 $this->_printRules($l, $tab = $tab*2);
             }
-
         }
-        echo "</ul>";
+        echo '</ul>';
     }
 
     public function generateRules()
@@ -200,6 +195,7 @@ class C45
         $this->finalRules = $rules;
         // print_r($rules);
     }
+
     public $l = [];
 
     public function _generateRules($i)
@@ -217,7 +213,7 @@ class C45
 
     public function printRules()
     {
-        $this->_printRules($this->finalRules);
+        return $this->_printRules($this->finalRules);
     }
 
     public function predictDataTesting(array $data = [])

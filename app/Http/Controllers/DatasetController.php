@@ -15,7 +15,7 @@ class DatasetController extends Controller
      */
     public function index()
     {
-        $data = Dataset::all();
+        $data = Dataset::paginate(10);
         return view('dataset.dataset_index', compact('data'));
     }
 
@@ -39,7 +39,7 @@ class DatasetController extends Controller
         if ($request->expectsJson()) {
             return response()->json(['message' => ['success' => 'Berhasil menambah data.']], 200);
         }
-        return redirect()->back()->withErrors($validator)->withInput();
+        return redirect()->back()->with('alert-success', 'Berhasil menambah data.');
     }
 
     /**
@@ -49,9 +49,22 @@ class DatasetController extends Controller
      * @param  \App\Dataset  $dataset
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Dataset $dataset)
+    public function update(Request $request, Dataset $dataset, $id)
     {
-        //
+        $validator = \Validator::make($request->all(),[
+            'data.*' => 'required|string'
+        ]);
+        $atribut = \App\Atribut::all();
+        foreach ($atribut as $key => $value) {
+            $data[$key] = $request->data[$key];
+        }
+        // return dd($data);
+        $dataset = Dataset::find($id);
+        $dataset->update(['data' => $data]);
+        if ($request->expectsJson()) {
+            return response()->json(['message' => ['success' => 'Berhasil merubah data.']], 200);
+        }
+        return redirect()->back()->with('alert-success', 'Berhasil merubah data.');
     }
 
     /**
@@ -63,6 +76,6 @@ class DatasetController extends Controller
     public function destroy(Dataset $dataset, $id)
     {
         Dataset::destroy($id);
-        return redirect()->back()->with('alert-success', 'Berhasil haspus dataset.');
+        return redirect()->back()->with('alert-success', 'Berhasil hapus data.');
     }
 }

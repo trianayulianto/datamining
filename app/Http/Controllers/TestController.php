@@ -10,20 +10,20 @@ class TestController extends Controller
     public function index()
     {
         $data  = [
-            ["sunny", 'hot', 'high', 'false', 'no'],
-            ["sunny", 'hot', 'high', 'true', 'no'],
-            ["cloudy", 'hot', 'high', 'false', 'yes'],
-            ["rainy", 'mild', 'high', 'false', 'yes'],
-            ["rainy", 'cool', 'normal', 'false', 'yes'],
-            ["rainy", 'cool', 'normal', 'true', 'yes'],
-            ["cloudy", 'cool', 'normal', 'true', 'yes'],
-            ["sunny", 'mild', 'high', 'false', 'no'],
-            ["sunny", 'cool', 'normal', 'false', 'yes'],
-            ["rainy", 'mild', 'normal', 'false', 'yes'],
-            ["sunny", 'mild', 'normal', 'true', 'yes'],
-            ["cloudy", 'mild', 'high', 'true', 'yes'],
-            ["cloudy", 'hot', 'normal', 'false', 'yes'],
-            ["rainy", 'mild', 'high', 'true', 'no'],
+            ["sunny", "hot", "high", "false", "no"],
+            ["sunny", "hot", "high", "true", "no"],
+            ["cloudy", "hot", "high", "false", "yes"],
+            ["rainy", "mild", "high", "false", "yes"],
+            ["rainy", "cool", "normal", "false", "yes"],
+            ["rainy", "cool", "normal", "true", "yes"],
+            ["cloudy", "cool", "normal", "true", "yes"],
+            ["sunny", "mild", "high", "false", "no"],
+            ["sunny", "cool", "normal", "false", "yes"],
+            ["rainy", "mild", "normal", "false", "yes"],
+            ["sunny", "mild", "normal", "true", "yes"],
+            ["cloudy", "mild", "high", "true", "yes"],
+            ["cloudy", "hot", "normal", "false", "yes"],
+            ["rainy", "mild", "high", "true", "no"],
 
         ];
         // Nama Atribut data
@@ -39,7 +39,7 @@ class TestController extends Controller
 
         // Uji Coba dengan menggunakan 1 data testing sebagai berikut:
 
-        $data_testing = ['rainy', 'cool', 'high', 'true'];
+        $data_testing = ["rainy", "cool", "high", "true"];
         echo 'Dari hasil perhitungan maka didapatkan hasil : '.$c45->predictDataTesting($data_testing);
         // Luaran diatas akan menghasilkan jawaban Yes
 

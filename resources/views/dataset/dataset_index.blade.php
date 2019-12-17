@@ -8,9 +8,9 @@
             <a href="#" class="btn btn-primary pull-right addDataset">
                 <i class="fas fa-plus"></i> Tambah
             </a>
-            {{-- <a href="#" class="btn btn-success pull-right">
+            <a id="importExcel" href="#" class="btn btn-success pull-right">
                 <i class="fas fa-file-import"></i> Import
-            </a> --}}
+            </a>
         </div>
     </div>
 
@@ -40,9 +40,9 @@
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
                                                 <td>
-                                                    @for ($i = 0; $i < count($item->data); $i++)
-                                                        [{{ $item->data[$i] }}]
-                                                    @endfor
+                                                    @foreach ($item->data as $value)
+                                                        [{{ $value }}]
+                                                    @endforeach
                                                 </td>
                                                 <td class="text-center">{{ \Carbon\Carbon::createFromTimeStamp(strtotime($item->created_at))->diffForHumans() }}</td>
                                                 <td class="text-center">{{ !empty($item->updated_at) ? \Carbon\Carbon::createFromTimeStamp(strtotime($item->updated_at))->diffForHumans() : '-+-' }}</td>
@@ -58,6 +58,9 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <div class="pull-right">
+                                    {{ $data->links() }}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -130,8 +133,8 @@
                 e.preventDefault();
                 var id = $(this).attr('data-id');
                 $('#modaldetail').modal('show');
-                $('#modaldetail').find('.modal-title').html('Edit atribut').addClass('text-white');
-                var url = '{{ route('atribut.update', ['id' => ':id']) }}';
+                $('#modaldetail').find('.modal-title').html('Edit dataset').addClass('text-white');
+                var url = '{{ route('dataset.update', ['id' => ':id']) }}';
                 url = url.replace(':id', id);
                 $('#modaldetail').find('form').attr('action', url);
                 $('#modaldetail').find('form').prepend('{{ method_field('PUT') }}');
@@ -172,6 +175,18 @@
                         }
                     });
                 }
+            });
+
+            $('#importExcel').click(function (e) {
+                e.preventDefault();
+                $('#modaldetail').modal('show');
+
+                $('#modaldetail').find('.modal-title').html('Import Dataset dari Excel').addClass('text-white');
+                $('#modaldetail').find('form').attr('action', '{{ route('import.excel') }}');
+                $('#modaldetail').find('form').attr('enctype', 'multipart/form-data');
+
+                var html = '<div class="form-group"><input type="file" class="form-control col-12" name="excel" id="excel"></div>';
+                $(html).appendTo('.form-dataset');
             });
 
             $('#modaldetail').on('hide.bs.modal', function(){
