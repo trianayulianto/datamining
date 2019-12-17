@@ -19,7 +19,12 @@
             <!-- Basic Card Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Dataset</h6>
+                    <div class="d-sm-flex align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Dataset</h6>
+                        {{-- <a id="exportExcel" href="#" class="btn btn-sm btn-success pull-right">
+                            <i class="fas fa-file-export"></i> Export
+                        </a> --}}
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="col-lg-12">

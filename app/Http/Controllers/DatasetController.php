@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Dataset;
+use App\Imports\DatasetImport;
 use Illuminate\Http\Request;
 use \Illuminate\Http\Response;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DatasetController extends Controller
 {
@@ -30,16 +32,24 @@ class DatasetController extends Controller
         $validator = \Validator::make($request->all(),[
             'data.*' => 'required|string'
         ]);
-        $atribut = \App\Atribut::all();
-        foreach ($atribut as $key => $value) {
-            $data[$key] = $request->data[$key];
+        $count = \App\Atribut::count();
+        for ($i=0; $i < $count; $i++) {
+            $data[$i] = $request->data[$i];
         }
+
         // return dd($data);
         $data = Dataset::create(['data' => $data]);
         if ($request->expectsJson()) {
             return response()->json(['message' => ['success' => 'Berhasil menambah data.']], 200);
         }
         return redirect()->back()->with('alert-success', 'Berhasil menambah data.');
+    }
+
+    public function import(Request $request)
+    {
+        Excel::import(new DatasetImport, request()->file('excel'));
+
+        return back()->with('alert-success', 'Berhasil import dataset.');
     }
 
     /**

@@ -35,13 +35,12 @@ Route::group(['prefix' => 'admin'], function () {
         Route::post('/store', 'DatasetController@store')->name('dataset.store');
         Route::put('/{id}/update', 'DatasetController@update')->name('dataset.update');
         Route::get('/{id}/delete', 'DatasetController@destroy')->name('dataset.delete');
+        Route::post('/import', 'DatasetController@import')->name('import.excel');
     });
 
-    Route::get('/hitung', 'HitungController@index')->name('hitung.index');
-    Route::post('/hitung/hasil', 'HitungController@hasil')->name('hasil.index');
-
-    Route::get('/test', 'TestController@index');
-
-    Route::get('/import', 'UserController@profile')->name('import.excel');
+    Route::group(['prefix' => 'hitung'], function () {
+        Route::get('/', 'HitungController@index')->name('hitung.index');
+        Route::post('/hasil', 'HitungController@hasil')->name('hasil.index');
+    });
 
 });
