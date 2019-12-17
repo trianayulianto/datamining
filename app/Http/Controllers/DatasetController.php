@@ -18,7 +18,8 @@ class DatasetController extends Controller
     public function index()
     {
         $data = Dataset::paginate(10);
-        return view('dataset.dataset_index', compact('data'));
+        $atribut = \App\Atribut::all();
+        return view('dataset.dataset_index', compact('data','atribut'));
     }
 
     /**

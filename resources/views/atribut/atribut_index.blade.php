@@ -109,6 +109,7 @@
                 $('#modaldetail').modal('show');
                 $('#modaldetail').find('.modal-title').html('Tambah nilai atribut '+name_atribut).addClass('text-white');
                 $('#modaldetail').find('form').attr('action', '{{ route('nilai.store') }}');
+                $('#modaldetail').find('label[for="name"]').html('Nilai Atribut');
                 $('input[name="_token"]').after('<input type="hidden" name="atribut_id" value="'+id_atribut+'">');
             });
 
@@ -117,6 +118,7 @@
                 $('#modaldetail').modal('show');
                 $('#modaldetail').find('.modal-title').html('Tambah atribut baru').addClass('text-white');
                 $('#modaldetail').find('form').attr('action', '{{ route('atribut.store') }}');
+                $('#modaldetail').find('label[for="name"]').html('Nama Atribut');
             });
 
             $('.editAtribut').click(function (e) {
@@ -124,6 +126,7 @@
                 var id = $(this).attr('data-id');
                 $('#modaldetail').modal('show');
                 $('#modaldetail').find('.modal-title').html('Edit atribut').addClass('text-white');
+                $('#modaldetail').find('label[for="name"]').html('Nama Atribut');
                 var url = '{{ route('atribut.update', ['id' => ':id']) }}';
                 url = url.replace(':id', id);
                 $('#modaldetail').find('form').attr('action', url);

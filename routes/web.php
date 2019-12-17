@@ -11,13 +11,13 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use Illuminate\Support\Facades\Auth;
 
-Route::group(['prefix' => 'admin'], function () {
+Route::get('/', 'Auth\LoginController@login');
 
-    Route::get('/dashboard', function () {
+Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
+
+    Route::get('/home', function () {
         return view('MyHome');
     })->name('home.index');
 
@@ -44,3 +44,5 @@ Route::group(['prefix' => 'admin'], function () {
     });
 
 });
+
+Auth::routes();

@@ -34,7 +34,9 @@
                                     <thead class="text-dark">
                                         <tr>
                                             <th width="1%">No</th>
-                                            <th width="40%">Dataset</th>
+                                            @foreach ($atribut as $item)
+                                                <th>{{ $item->name }}</th>
+                                            @endforeach
                                             <th class="text-center">created_at</th>
                                             <th class="text-center">updated_at</th>
                                             <th class="text-center" width="100">Aksi</th>
@@ -44,11 +46,9 @@
                                         @foreach ($data as $key => $item)
                                             <tr>
                                                 <td>{{ $key+1 }}</td>
-                                                <td>
-                                                    @foreach ($item->data as $value)
-                                                        [{{ $value }}]
-                                                    @endforeach
-                                                </td>
+                                                @foreach ($item->data as $value)
+                                                    <td>{{ $value }}</td>
+                                                @endforeach
                                                 <td class="text-center">{{ \Carbon\Carbon::createFromTimeStamp(strtotime($item->created_at))->diffForHumans() }}</td>
                                                 <td class="text-center">{{ !empty($item->updated_at) ? \Carbon\Carbon::createFromTimeStamp(strtotime($item->updated_at))->diffForHumans() : '-+-' }}</td>
                                                 <td>
