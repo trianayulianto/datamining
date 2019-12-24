@@ -11,9 +11,19 @@
             <!-- Basic Card Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Hasil Uji</h6>
+                    <div class="d-sm-flex align-items-center justify-content-between">
+                        <h6 class="m-0 font-weight-bold text-primary">Desicion Tree</h6>
+                        <a id="exportExcel" href="{{ route('hitung.index') }}" class="m-0 font-weight-bold text-primary">
+                            <i class="fas fas fa-arrow-circle-left"></i> Kembali
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body">
+                    <h4><i class="fas fas fa-arrow-circle-right"></i> Data Uji perhitungan:</h4>
+                    @for ($i = 0; $i < count($dataUjicoba['data']); $i++)
+                        <span class="badge badge-success">{!! strtoupper($attributes[$i+1]).' <i class="fas fas fa-arrow-right"></i> "'.$dataUjicoba['data'][$i].'"' !!}</span>
+                    @endfor
+                    <hr>
                     <h4><i class="fas fa-check-circle"></i> {{ $hasilUjicoba }}</h4>
                     <hr>
                     <h5><i class="fas fa-code-branch"></i> Dengan Rule yang dihasilkan adalah:</h5>
@@ -40,6 +50,7 @@
             $('.c45').first().remove();
 
             $('ul').show();
+
         });
 
     </script>

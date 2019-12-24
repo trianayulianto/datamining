@@ -15,8 +15,7 @@
                 </div>
                 <div class="card-body">
                     <div class="col-mb-12">
-                        <form class="formUji" action="{{ route('hasil.index') }}" method="post">
-                            @csrf
+                        <form class="formUji" action="{{ route('hasil.index') }}" method="get">
                             <button type="submit" class="btn btn-md btn-success btnSubmit">Submit</button>
                         </form>
                     </div>

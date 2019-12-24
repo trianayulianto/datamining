@@ -13,13 +13,11 @@
 
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', 'Auth\LoginController@login');
+Route::get('/', 'HomeController@loginCheck');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
-    Route::get('/home', function () {
-        return view('MyHome');
-    })->name('home.index');
+    Route::get('/home', 'HomeController@index')->name('home.index');
 
     Route::group(['prefix' => 'atribut'], function () {
         Route::get('/', 'AtributController@index')->name('atribut.index');
@@ -40,7 +38,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth']], function () {
 
     Route::group(['prefix' => 'hitung'], function () {
         Route::get('/', 'HitungController@index')->name('hitung.index');
-        Route::post('/hasil', 'HitungController@hasil')->name('hasil.index');
+        Route::get('/hasil', 'HitungController@hasil')->name('hasil.index');
     });
 
 });

@@ -52,6 +52,9 @@ class HitungController extends Controller
         $ruleUjicoba = $c45->printRules();
         // dd($hasilUjicoba);
 
-        return view('hitung.hasil_index', compact('hasilUjicoba','ruleUjicoba'));
+        // Data Ujicoba
+        $dataUjicoba =$request->all();
+
+        return view('hitung.hasil_index', compact('attributes','hasilUjicoba','ruleUjicoba','dataUjicoba'));
     }
 }
