@@ -13,7 +13,7 @@
         "axios": "^0.19",
         "bootstrap-social": "^5.1.1",
         "cross-env": "^5.1",
-        "datatables.net": "^1.10.20",
+        "datatables.net": "^1.10.22",
         "datatables.net-bs": "^1.10.20",
         "datatables.net-responsive": "^2.2.3",
         "datatables.net-responsive-bs": "^2.2.3",
